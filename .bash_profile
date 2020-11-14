@@ -5,27 +5,10 @@ export PATH=/usr/local/bin:$PATH
 export CPPFLAGS=-I/usr/local/opt/openssl/include
 export LDFLAGS=-L/usr/local/opt/openssl/lib
 export DOCKER_REPO_PREFIX=hub.docker.prod.walmart.com
-export M2_HOME=/usr/local/Cellar/maven/3.6.3_1/libexec
-export M2=${M2_HOME}/bin
 export PATH=${PATH}:${M2_HOME}/bin
 export PATH=${PATH}:/usr/local/bin
 
-function proxy_sys(){
-    export {http,https,ftp}_proxy=''
-    export no_proxy=''
-}
-function proxy_dev(){
-    export {http,https,ftp}_proxy=''
-    export no_proxy=''
-}
-
-function proxy_none(){
-    unset http_proxy
-    unset https_proxy 
-    unset no_prox
-}
-
-[ -d $M2_HOME ] && true || echo "    Error: Directory $M2_HOME does not exists."
+[ -f ~/.company.bash ] && source ~/.company.bash
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -37,7 +20,6 @@ alias ls='ls -GFh'
 alias edit-bash='code ~/.bash_profile'
 alias update-bash='. ~/.bash_profile'
 alias chromes='open /Applications/Google\ Chrome.app --args --remote-debugging-port=9222 --disable-web-security --user-data-dir'
-alias jump-to='sh ~/scripts/jump-to.sh'
 alias dc="docker-compose"
 alias d="docker"
 alias k=kubectl

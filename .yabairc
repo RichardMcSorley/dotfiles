@@ -14,3 +14,6 @@ yabai -m config window_gap     20
 # floating windows are always on top (default: off)
 yabai -m config window_topmost on
 
+yabai -m rule --add app="Microsoft Outlook" title="Reminder$" manage=off
+yabai -m rule --add app="Cisco AnyConnect Secure Mobility Client" manage=off
+

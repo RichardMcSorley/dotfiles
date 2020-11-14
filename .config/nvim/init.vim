@@ -44,7 +44,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier'
-Plug 'ThePrimeagen/vim-be-good'
+"Plug 'ThePrimeagen/vim-be-good'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -182,6 +182,9 @@ endfunction
 let g:coc_global_extensions = [
   \ 'coc-snippets',
   \ 'coc-pairs',
+  \ 'coc-tslint',
+  \ 'coc-tslint-plugin',
+  \ 'coc-explorer',
   \ 'coc-tsserver',
   \ 'coc-eslint',
   \ 'coc-prettier',
