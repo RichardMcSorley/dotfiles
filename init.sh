@@ -19,6 +19,8 @@ brew install vcprompt
 brew install koekeishiya/formulae/skhd
 brew install koekeishiya/formulae/yabai
 brew cask install alacritty
+brew install ranger
+brew install tmux
 
 # startup brew services
 brew services start skhd
