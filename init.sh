@@ -1,8 +1,8 @@
 #!/bin/bash
 
 shopt -s expand_aliases
-
-# seutp xcode
+mkdir -p ~./config/nvim/undo
+# setup xcode
 xcode-select --install
 
 # Install Homebrew

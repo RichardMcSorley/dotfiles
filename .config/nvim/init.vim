@@ -1,23 +1,6 @@
-" init autocmd
-autocmd!
-" set script encoding
-scriptencoding utf-8
-
-syntax on
-set nocompatible              " be iMproved, required
-filetype off                  " required
-filetype plugin indent on    " required
-set guicursor=
-set noshowmatch
 set relativenumber
-set nohlsearch
-set noerrorbells
-set tabstop=4 softtabstop=4
-set shiftwidth=4
-set expandtab
-set smartindent
-set nu
 set nowrap
+set mouse=a
 set smartcase
 set noswapfile
 set nobackup
@@ -42,13 +25,13 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 " Finding files - Search down into subfolders
 set path+=**
 set wildignore+=*/node_modules/*
-
 call plug#begin('~/.vim/plugged')
 
 Plug 'tjdevries/train.nvim'
 Plug 'ChristianChiarulli/codi.vim'
 Plug 'airblade/vim-rooter'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'tpope/vim-fugitive'
 Plug 'mbbill/undotree'
 Plug 'sheerun/vim-polyglot'
@@ -168,32 +151,15 @@ let g:javascript_conceal_arrow_function       = "⇒"
 let g:javascript_conceal_function             = "ƒ"
 set conceallevel=1
 inoremap jk <ESC>
-nmap <C-n> :NERDTreeToggle<CR>
+" comment out code
 vmap ++ <plug>NERDCommenterToggle
 nmap ++ <plug>NERDCommenterToggle
-
-nmap <S-Tab> :tabprev<Return>
+" tab navigate
+nmap <S-Tab> :tabprev<Return> 
 nmap <Tab> :tabnext<Return>
+" tab open / close
 nmap te :tabedit
 nmap tc :tabclose<Return>
-
-let g:NERDTreeIgnore = ['^node_modules$']
-let g:NERDTreeGitStatusWithFlags = 1
-" sync open file with NERDTree
-" " Check if NERDTree is open or active
-function! IsNERDTreeOpen()
-  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-endfunction
-
-" Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
-" file, and we're not in vimdiff
-function! SyncTree()
-  if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
-    NERDTreeFind
-    wincmd p
-  endif
-endfunction
-" Highlight currently open buffer in NERDTree
 
 " coc config
 let g:coc_global_extensions = [
@@ -220,10 +186,8 @@ let g:coc_global_extensions = [
   \ 'coc-yaml',
   \ 'coc-tailwindcss',
   \ ]
-" from readme
-" if hidden is not set, TextEdit might fail.
-set hidden " Some servers have issues with backup files, see #649 set nobackup set nowritebackup " Better display for messages set cmdheight=2 " You will have bad experience for diagnostic messages when it's default 4000.
 
+set hidden 
 " always show signcolumns
 set signcolumn=yes
 
@@ -256,7 +220,6 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
@@ -265,10 +228,8 @@ function! s:show_documentation()
   endif
 endfunction
 
-
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
-
 
 " Remap for rename current word
 nmap <F2> <Plug>(coc-rename)
@@ -276,7 +237,6 @@ nmap <F2> <Plug>(coc-rename)
 " Remap for format selected region
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
-
 
 augroup mygroup
   autocmd!
