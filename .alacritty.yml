@@ -37,7 +37,6 @@ key_bindings:
 
 scrolling:
   history: 20000
-background_opacity: 0.5
 
 url:
   Default: open

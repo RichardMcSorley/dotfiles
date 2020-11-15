@@ -1,3 +1,8 @@
+" init autocmd
+autocmd!
+" set script encoding
+scriptencoding utf-8
+
 syntax on
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -20,6 +25,10 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set termguicolors
+" Ignore case when searching
+set ignorecase
+" Be smart when using tabs ;)
+set smarttab
 set scrolloff=8
 " Give more space for displaying messages.
 set cmdheight=2
@@ -30,6 +39,9 @@ set updatetime=50
 set shortmess+=c
 set colorcolumn=80
 highlight ColorColumn ctermbg=0 guibg=lightgrey
+" Finding files - Search down into subfolders
+set path+=**
+set wildignore+=*/node_modules/*
 
 call plug#begin('~/.vim/plugged')
 

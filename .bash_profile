@@ -7,6 +7,8 @@ export LDFLAGS=-L/usr/local/opt/openssl/lib
 export DOCKER_REPO_PREFIX=hub.docker.prod.walmart.com
 export PATH=${PATH}:${M2_HOME}/bin
 export PATH=${PATH}:/usr/local/bin
+export PATH=${PATH}:${HOME}/Library/Python/2.7/bin
+export PATH=${PATH}:${HOME}/Library/Python/3.7/bin
 
 [ -f ~/.company.bash ] && source ~/.company.bash
 
