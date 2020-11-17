@@ -9,13 +9,20 @@ export PATH=${PATH}:${M2_HOME}/bin
 export PATH=${PATH}:/usr/local/bin
 export PATH=${PATH}:${HOME}/Library/Python/2.7/bin
 export PATH=${PATH}:${HOME}/Library/Python/3.7/bin
+# Add Visual Studio Code (code)
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
+export ANDROID_SDK=/Users/r0m00n5/Library/Android/sdk
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 [ -f ~/.company.bash ] && source ~/.company.bash
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export ANDROID_SDK=/Users/r0m00n5/Library/Android/sdk
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_DEFAULT_COMMAND="fd --type file --color=always"
+export FZF_DEFAULT_OPTS="--ansi"
 
 alias watch='watch '
 alias ls='ls -GFh'
@@ -40,7 +47,6 @@ function kubectlgetall {
   done
 }
 
-
 # Bash wrappers for docker run commands
 
 #
@@ -63,17 +69,18 @@ rmctr(){
 	# shellcheck disable=SC2068
 	docker rm -f $@ 2>/dev/null || true
 }
+
 relies_on(){
 	for container in "$@"; do
 		local state
 		state=$(docker inspect --format "{{.State.Running}}" "$container" 2>/dev/null)
-
 		if [[ "$state" == "false" ]] || [[ "$state" == "" ]]; then
 			echo "$container is not running, starting it for you."
 			$container
 		fi
 	done
 }
+
 az(){
 	docker run -it --rm \
 		-v "${HOME}/.azure:/root/.azure" \
@@ -81,12 +88,14 @@ az(){
 		--log-driver none \
 		${DOCKER_REPO_PREFIX}/microsoft/azure-cli az "$@"
 }
+
 hollywood(){
 	docker run --rm -it \
 		--name hollywood \
     	--cpus=0.3 \
 		${DOCKER_REPO_PREFIX}/bcbcarl/hollywood
 }
+
 htop(){
 	docker run --rm -it \
 		--pid host \
@@ -94,11 +103,13 @@ htop(){
 		--name htop \
 		${DOCKER_REPO_PREFIX}/jess/htop
 }
+
 traceroute(){
 	docker run --rm -it \
 		--net host \
 		${DOCKER_REPO_PREFIX}/jess/traceroute "$@"
 }
+
 travis(){
 	docker run -it --rm \
 		-v "${HOME}/.travis:/root/.travis" \
@@ -107,35 +118,26 @@ travis(){
 		--log-driver none \
 		${DOCKER_REPO_PREFIX}/jess/travis "$@"
 }
+
 watchman(){
 	del_stopped watchman
-
 	docker run -d \
 		-v "${HOME}/Downloads:/root/Downloads" \
 		--name watchman \
 		${DOCKER_REPO_PREFIX}/jess/watchman --foreground
 }
+
 wrk(){
 	docker run -it --rm \
 		--log-driver none \
 		--name wrk \
 		${DOCKER_REPO_PREFIX}/jess/wrk "$@"
 }
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-# Add Visual Studio Code (code)
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-
 
 dotenv(){
 	export $(cat $PWD/.env)
 }
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-export FZF_DEFAULT_COMMAND="fd --type file --color=always"
-export FZF_DEFAULT_OPTS="--ansi"
 
 fkill(){
 	PID=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
@@ -160,3 +162,4 @@ ide(){
     tmux split-window -h -p 50
 }
 
+eval "$(starship init bash)"

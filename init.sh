@@ -21,6 +21,7 @@ brew install koekeishiya/formulae/yabai
 brew cask install alacritty
 brew install ranger
 brew install tmux
+brew install starship
 
 # startup brew services
 brew services start skhd
