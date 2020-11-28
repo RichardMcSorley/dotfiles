@@ -8,6 +8,7 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set termguicolors
+set lazyredraw
 " Ignore case when searching
 set ignorecase
 " Be smart when using tabs ;)
@@ -28,6 +29,8 @@ set wildignore+=*/node_modules/*
 call plug#begin('~/.vim/plugged')
 
 Plug 'tjdevries/train.nvim'
+Plug 'ChristianChiarulli/far.vim'
+Plug 'frazrepo/vim-rainbow'
 Plug 'ChristianChiarulli/codi.vim'
 Plug 'airblade/vim-rooter'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -362,10 +365,10 @@ nmap s <Plug>(easymotion-overwin-f2)
 map ; :
 noremap ;; ;
 
-command! -bang -nargs=* GGrep
-  \ call fzf#vim#grep(
-  \   'git grep --line-number -- '.shellescape(<q-args>), 0,
-  \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
+"command! -bang -nargs=* GGrep
+  "\ call fzf#vim#grep(
+  "\   'git grep --line-number -- '.shellescape(<q-args>), 0,
+  "\   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
 
 " Copy paste
 vnoremap <C-c> "+y
@@ -383,3 +386,20 @@ let g:airline_section_z = "%p%% : \ue0a1:%l/%L: Col:%c"
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'CocCommand explorer' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg -uu --column --line-number --hidden --ignore-case --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
+
+nnoremap <C-g> :Rg<Cr>
+
+au FileType javascript,typescript call rainbow#load()
+
+let g:far#source='rgnvim'
+
+let g:far#window_width=60
+
+let g:far#file_mask_favorites=['%:p', '**/*.*', '**/*.js', '**/*.py', '**/*.java', '**/*.css', '**/*.html', '**/*.vim', '**/*.cpp', '**/*.c', '**/*.h', ]
+let g:far#window_min_content_width=30
+let g:far#enable_undo=1

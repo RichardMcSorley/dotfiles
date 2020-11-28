@@ -10,5 +10,13 @@
     "v": "open:vsplit"
   },
   "explorer.icon.enableNerdFont": true,
-  "explorer.quitOnOpen": true
+  "explorer.quitOnOpen": true,
+  "snippets.extends": {
+    "html": ["html", "typescript"],
+    "typescript": ["javascript", "typescript"],
+    "javascript": ["javascript"]
+  },
+  "snippets.textmateSnippetsRoots": [
+    "~/.config/coc/vscode_snippets"
+  ]
 }
