@@ -22,7 +22,10 @@ brew cask install alacritty
 brew install ranger
 brew install tmux
 brew install starship
-
+brew tap adoptopenjdk/openjdk
+brew cask install adoptopenjdk11
+brew cask install adoptopenjdk8
+brew install gradle
 # startup brew services
 brew services start skhd
 brew services start yabai

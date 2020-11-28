@@ -9,10 +9,13 @@ export PATH=${PATH}:${M2_HOME}/bin
 export PATH=${PATH}:/usr/local/bin
 export PATH=${PATH}:${HOME}/Library/Python/2.7/bin
 export PATH=${PATH}:${HOME}/Library/Python/3.7/bin
+export JAVA_HOME=$(/usr/libexec/java_home -v1.8)
 # Add Visual Studio Code (code)
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
-export ANDROID_SDK=/Users/r0m00n5/Library/Android/sdk
+export ANDROID_HOME=~/Library/Android/sdk
+export ANDROID_SDK_ROOT=~/Library/Android/sdk
+export ANDROID_AVD_HOME=~/.android/avd
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
@@ -34,6 +37,7 @@ alias d="docker"
 alias k=kubectl
 alias vpn="osascript ~/vpn/vpn.applescript"
 alias config="/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME"
+alias lw="nodemon --exec 'npm run lint || exit 1' --ext ts,html,scss"
 
 function gitr(){
 	echo "Running git reset --hard ${1}/${2}"
@@ -96,13 +100,13 @@ hollywood(){
 		${DOCKER_REPO_PREFIX}/bcbcarl/hollywood
 }
 
-htop(){
-	docker run --rm -it \
-		--pid host \
-		--net none \
-		--name htop \
-		${DOCKER_REPO_PREFIX}/jess/htop
-}
+#htop(){
+	#docker run --rm -it \
+		#--pid host \
+		#--net none \
+		#--name htop \
+		#${DOCKER_REPO_PREFIX}/jess/htop
+#}
 
 traceroute(){
 	docker run --rm -it \
