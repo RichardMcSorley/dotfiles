@@ -18,13 +18,13 @@ brew install git
 brew install vcprompt
 brew install koekeishiya/formulae/skhd
 brew install koekeishiya/formulae/yabai
-brew cask install alacritty
+brew install alacritty
 brew install ranger
 brew install tmux
 brew install starship
 brew tap adoptopenjdk/openjdk
-brew cask install adoptopenjdk11
-brew cask install adoptopenjdk8
+brew install adoptopenjdk11
+brew install adoptopenjdk8
 brew install gradle
 # startup brew services
 brew services start skhd
@@ -70,5 +70,5 @@ mkdir -p ~/projects
 # install fonts
 brew tap homebrew/cask-fonts
 brew tap corgibytes/cask-fonts
-brew cask install font-mononoki-nerd-eont
-brew cask install font-hack-nerd-font
+brew install font-mononoki-nerd-font
+brew install font-hack-nerd-font
