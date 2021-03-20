@@ -10,8 +10,6 @@ export PATH=${PATH}:/usr/local/bin
 export PATH=${PATH}:${HOME}/Library/Python/2.7/bin
 export PATH=${PATH}:${HOME}/Library/Python/3.7/bin
 export JAVA_HOME=$(/usr/libexec/java_home -v1.8)
-# Add Visual Studio Code (code)
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 export ANDROID_HOME=~/Library/Android/sdk
 export ANDROID_SDK_ROOT=~/Library/Android/sdk
@@ -167,3 +165,8 @@ ide(){
 }
 
 eval "$(starship init bash)"
+
+newssh(){
+	yes | ssh-keygen -t ed25519 -N "" -C "richard.mcsorley@hey.com" -f ~/.ssh/id_ed25519
+	cat ~/.ssh/id_ed25519.pub | pbcopy
+}
