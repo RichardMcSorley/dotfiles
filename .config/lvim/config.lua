@@ -8,46 +8,8 @@ vim.opt.ignorecase = true
 -- enable smartcase, allow for case sensitivity during search if you type capital letters.
 vim.opt.smartcase = true
 
-vim.g.javascript_conceal_function                  = "ƒ"
-vim.g.javascript_conceal_null                      = "ø"
-vim.g.javascript_conceal_this                      = "@"
-vim.g.javascript_conceal_return                    = "⇚"
-vim.g.javascript_conceal_undefined                 = "¿"
-vim.g.javascript_conceal_NaN                       = "ℕ"
-vim.g.javascript_conceal_prototype                 = "¶"
-vim.g.javascript_conceal_static                    = "•"
-vim.g.javascript_conceal_super                     = "Ω"
-vim.g.javascript_conceal_arrow_function            = "⇒"
-vim.g.javascript_conceal_noarg_arrow_function      = "🞅"
-vim.g.javascript_conceal_underscore_arrow_function = "🞅"
-vim.g.typescript_conceal_function                  = "ƒ"
-vim.g.typescript_conceal_null                      = "ø"
-vim.g.typescript_conceal_undefined                 = "¿"
-vim.g.typescript_conceal_this                      = "@"
-vim.g.typescript_conceal_return                    = "⇚"
-vim.g.typescript_conceal_prototype                 = "¶"
-vim.g.typescript_conceal_super                     = "Ω"
-
 vim.o.concealcursor = ''
 vim.o.conceallevel  = 2
-
-local opts = { noremap = true, silent = true }
-
-vim.keymap.set("n", "<F10>", function()
-  if vim.o.conceallevel > 0 then
-    vim.o.conceallevel = 0
-  else
-    vim.o.conceallevel = 2
-  end
-end, opts)
-
-vim.keymap.set("n", "<F11>", function()
-  if vim.o.concealcursor == "n" then
-    vim.o.concealcursor = ""
-  else
-    vim.o.concealcursor = "n"
-  end
-end, opts)
 
 -- general
 lvim.log.level = "warn"
@@ -119,6 +81,74 @@ lvim.plugins = {
   { "fedepujol/move.nvim" },
   { "windwp/nvim-ts-autotag" },
   { "sheerun/vim-polyglot" },
+  { "dstein64/nvim-scrollview" },
+  { "nvim-lua/plenary.nvim" },
+  { "karb94/neoscroll.nvim" },
+  {
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup {
+        signs = true, -- show icons in the signs column
+        sign_priority = 8, -- sign priority
+        -- keywords recognized as todo comments
+        keywords = {
+          FIX = {
+            icon = " ", -- icon used for the sign, and in search results
+            color = "error", -- can be a hex color, or a named color (see below)
+            alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+            -- signs = false, -- configure signs for some keywords individually
+          },
+          TODO = {
+            icon = " ",
+            color = "info",
+            alt = { "RICH", "RICHFIX" },
+          },
+          HACK = { icon = " ", color = "warning" },
+          WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+          PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+          NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+        },
+        merge_keywords = true, -- when true, custom keywords will be merged with the defaults
+        -- highlighting of the line containing the todo comment
+        -- * before: highlights before the keyword (typically comment characters)
+        -- * keyword: highlights of the keyword
+        -- * after: highlights after the keyword (todo text)
+        highlight = {
+          before = "", -- "fg" or "bg" or empty
+          keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
+          after = "fg", -- "fg" or "bg" or empty
+          pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
+          comments_only = true, -- uses treesitter to match keywords in comments only
+          max_line_len = 400, -- ignore lines longer than this
+          exclude = {}, -- list of file types to exclude highlighting
+        },
+        -- list of named colors where we try to extract the guifg from the
+        -- list of hilight groups or use the hex color if hl not found as a fallback
+        colors = {
+          error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
+          warning = { "DiagnosticWarning", "WarningMsg", "#FBBF24" },
+          info = { "DiagnosticInfo", "#2563EB" },
+          hint = { "DiagnosticHint", "#10B981" },
+          default = { "Identifier", "#7C3AED" },
+        },
+        search = {
+          command = "rg",
+          args = {
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+          },
+          -- regex that will be used to match keywords.
+          -- don't replace the (KEYWORDS) placeholder
+          pattern = [[\b(KEYWORDS):]], -- ripgrep regex
+          -- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
+        },
+      }
+    end
+  },
   {
     "windwp/nvim-ts-autotag",
     event = "InsertEnter",
@@ -141,6 +171,8 @@ lvim.plugins = {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
   },
+  { "edluffy/specs.nvim" },
+
 }
 
 require 'nvim-treesitter.configs'.setup {
@@ -172,14 +204,14 @@ require("indent_blankline").setup {
 }
 
 -- setup move.nvim
-vim.api.nvim_set_keymap('n', '<A-j>', ":MoveLine(1)<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<A-k>', ":MoveLine(-1)<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<A-j>', ":MoveBlock(1)<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<A-k>', ":MoveBlock(-1)<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<A-l>', ":MoveHChar(1)<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<A-h>', ":MoveHChar(-1)<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<A-l>', ":MoveHBlock(1)<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<A-h>', ":MoveHBlock(-1)<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<A-j>', ":MoveLine(2)<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<A-k>', ":MoveLine(0)<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<A-j>', ":MoveBlock(2)<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<A-h>', ":MoveHBlock(0)<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<A-k>', ":MoveBlock(0)<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<A-l>', ":MoveHChar(2)<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<A-h>', ":MoveHChar(0)<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<A-l>', ":MoveHBlock(2)<CR>", { noremap = true, silent = true })
 
 -- setup buffer close-buffers
 require('close_buffers').setup({
@@ -200,3 +232,35 @@ lvim.builtin.which_key.mappings["T"] = {
 }
 
 lvim.builtin.terminal.direction = 'float'
+
+require('neoscroll').setup({
+  -- All these keys will be mapped to their corresponding default scrolling animation
+  mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>',
+    '<C-y>', '<C-e>', 'zt', 'zz', 'zb' },
+  hide_cursor = true, -- Hide cursor while scrolling
+  stop_eof = true, -- Stop at <EOF> when scrolling downwards
+  respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+  cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+  easing_function = nil, -- Default easing function
+  pre_hook = nil, -- Function to run before the scrolling animation starts
+  post_hook = nil, -- Function to run after the scrolling animation ends
+  performance_mode = false, -- Disable "Performance Mode" on all buffers.
+})
+
+require('specs').setup {
+  show_jumps       = true,
+  min_jump         = 15,
+  popup            = {
+    delay_ms = 0, -- delay before popup displays
+    inc_ms = 15, -- time increments used for fade/resize effects
+    blend = 40, -- starting blend, between 0-100 (fully transparent), see :h winblend
+    width = 30,
+    winhl = "Beacon",
+    fader = require('specs').pulse_fader,
+    resizer = require('specs').shrink_resizer
+  },
+  ignore_filetypes = {},
+  ignore_buftypes  = {
+    nofile = true,
+  },
+}
