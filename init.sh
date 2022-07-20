@@ -5,34 +5,31 @@ mkdir -p ~./config/nvim/undo
 # setup xcode
 xcode-select --install
 
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/tj/n/master/bin/n)"
+npm install -g n
+
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 brew update
-brew install nvm
-brew install python2
-brew install python3
-brew install bash
-brew install fortune
-brew install cowsay
-brew install git
-brew install vcprompt
-brew install koekeishiya/formulae/skhd
-brew install koekeishiya/formulae/yabai
-brew install alacritty
-brew install ranger
-brew install tmux
-brew install starship
-brew tap adoptopenjdk/openjdk
-brew install adoptopenjdk11
-brew install adoptopenjdk8
-brew install gradle
-# startup brew services
-brew services start skhd
-brew services start yabai
+brew tap homebrew/cask-fonts
+brew tap corgibytes/cask-fonts
 
-# install the scripting addition yabai
-sudo yabai --install-sa
-killall Dock
+
+brew install \ 
+  python2   \
+  python3   \
+  bash      \
+  fortune   \
+  cowsay    \
+  git       \
+  vcprompt  \
+  alacritty \
+  ranger    \
+  tmux      \
+  starship  \
+  gradle    \
+  font-mononoki-nerd-font \ 
+  font-hack-nerd-font
 
 # install python packages
 sudo easy_install pip
@@ -66,9 +63,3 @@ chsh -s /usr/local/bin/bash
 
 # setup local environment
 mkdir -p ~/projects
-
-# install fonts
-brew tap homebrew/cask-fonts
-brew tap corgibytes/cask-fonts
-brew install font-mononoki-nerd-font
-brew install font-hack-nerd-font
