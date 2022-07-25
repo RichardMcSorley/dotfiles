@@ -11,6 +11,7 @@ vim.opt.smartcase = true
 vim.o.concealcursor = ''
 vim.o.conceallevel  = 2
 
+
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = true
@@ -21,6 +22,7 @@ lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- inoremap jk <ESC>
 vim.api.nvim_set_keymap('i', 'jk', '<ESC>', { noremap = true, silent = true })
+
 -- " comment out code
 vim.api.nvim_set_keymap('v', '++', "<plug>NERDCommenterToggle<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '++', "<plug>NERDCommenterToggle<CR>", { noremap = true, silent = true })

@@ -1,3 +1,4 @@
+live_config_reload: true
 # Colors (Dracula)
 colors:
   # Default colors
@@ -29,7 +30,7 @@ colors:
 window:
   decorations: 'none'
 key_bindings:
-  - { mods: Super,  key: N,  chars: ":CocCommand explorer\n" }
+  - { mods: Super,  key: N,  chars: " e\n" }
   - { mods: Super,  key: Slash,  chars: "++" }
   - { mods: Super,  key: P,  chars: ":GFiles\n" }
   - { mods: Control|Shift,  key: F,  chars: ":GGrep " }

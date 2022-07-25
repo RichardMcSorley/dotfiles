@@ -1,12 +1,13 @@
 #!/bin/bash
 
 shopt -s expand_aliases
-mkdir -p ~./config/nvim/undo
+mkdir -p ~./config/lvim/undo ~/projects ~/.n
 # setup xcode
 xcode-select --install
 
+# setup n
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/tj/n/master/bin/n)"
-npm install -g n
+npm install -g n eslint tldr
 
 # Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
@@ -16,8 +17,7 @@ brew tap corgibytes/cask-fonts
 
 
 brew install \ 
-  python2   \
-  python3   \
+  python    \
   bash      \
   fortune   \
   cowsay    \
@@ -30,11 +30,6 @@ brew install \
   gradle    \
   font-mononoki-nerd-font \ 
   font-hack-nerd-font
-
-# install python packages
-sudo easy_install pip
-python3 -m pip install --user --upgrade pynvim
-python2 -m pip install --user --upgrade pynvim
 
 # setup git
 git config --global core.excludesfile ~/.gitignore
@@ -50,16 +45,6 @@ config checkout -- .
 # setup bash profile
 source .bash_profile
 
-# setup nvim 
-mkdir ~/.nvm
-nvm install 12
-nvm alias default 12
-
-# install global npm packages
-npm install -g eslint tldr
-
 # change default sehll to new bash version
-chsh -s /usr/local/bin/bash
+chsh -s $(which bash)
 
-# setup local environment
-mkdir -p ~/projects
