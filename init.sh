@@ -14,6 +14,7 @@ npm install -g n eslint tldr
 brew update
 brew tap homebrew/cask-fonts
 brew tap corgibytes/cask-fonts
+brew tap wez/wezterm
 
 
 brew install \ 
@@ -23,7 +24,6 @@ brew install \
   cowsay    \
   git       \
   vcprompt  \
-  alacritty \
   ranger    \
   tmux      \
   starship  \
@@ -31,8 +31,17 @@ brew install \
   font-mononoki-nerd-font \ 
   font-hack-nerd-font
 
+brew install --cask wez/wezterm/wezterm
+
 # setup git
 git config --global core.excludesfile ~/.gitignore
+
+# setup tmux config
+git clone https://github.com/samoshkin/tmux-config.git
+./tmux-config/install.sh
+
+# setup bash profile
+source .bash_profile
 
 # setup dotfiles
 git clone --bare https://github.com/RichardMcSorley/dotfiles.git
@@ -42,9 +51,5 @@ config config --local status.showUntrackedFiles no
 config reset HEAD
 config checkout -- .
 
-# setup bash profile
-source .bash_profile
-
 # change default sehll to new bash version
 chsh -s $(which bash)
-
