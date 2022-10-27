@@ -14,6 +14,7 @@ npm install -g n eslint tldr
 brew update
 brew tap homebrew/cask-fonts
 brew tap corgibytes/cask-fonts
+brew tap wez/wezterm
 
 
 brew install \ 
@@ -23,13 +24,14 @@ brew install \
   cowsay    \
   git       \
   vcprompt  \
-  alacritty \
   ranger    \
   tmux      \
   starship  \
   gradle    \
   font-mononoki-nerd-font \ 
   font-hack-nerd-font
+
+brew install --cask wez/wezterm/wezterm
 
 # setup git
 git config --global core.excludesfile ~/.gitignore
@@ -47,4 +49,3 @@ source .bash_profile
 
 # change default sehll to new bash version
 chsh -s $(which bash)
-

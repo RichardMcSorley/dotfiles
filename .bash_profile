@@ -53,7 +53,7 @@ newssh(){
 }
 
 ide(){
-  tmux split-window -v -p 30
-  tmux split-window -h -p 50
-  tmux split-window -h -p 66
+  TOP=$(wezterm cli split-pane --bottom --top-level --percent 30)
+  LEFT=$(wezterm cli split-pane --right --percent 66 --pane-id $TOP)
+  RIGHT=$(wezterm cli split-pane --right --percent 50 --pane-id $LEFT)
 }
